@@ -31,6 +31,7 @@ class PokemonType(Enum):
     GRASS = "Grass"
     ELECTRIC = "Electric"
     NORMAL = "Normal"
+    DARK = "Dark"
 
 class Item:
     def __init__(self, name: str, effect_value: int, quantity: int):

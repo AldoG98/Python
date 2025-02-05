@@ -1,0 +1,10 @@
+
+        player_pokemon.apply_status_effects()
+        computer_pokemon.apply_status_effects()
+        
+        if player_pokemon.is_fainted():
+            print(f"\n{player_pokemon.name} fainted! You lose!")
+            break
+
+if __name__ == "__main__":
+    main()

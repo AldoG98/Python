@@ -1,0 +1,15 @@
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+
+# Ignore log files
+*.log
+
+# Ignore the .vscode folder
+.vscode/
+
+# Ignore pycache folder
+__pycache__/
+
+# Ignore other temporary files or folders
+*.db

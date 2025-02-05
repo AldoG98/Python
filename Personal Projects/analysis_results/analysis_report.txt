@@ -1,0 +1,5 @@
+Digital Archive Analysis Report
+============================
+
+Total Files Analyzed: 1
+Total Storage Used: 0.00 GB

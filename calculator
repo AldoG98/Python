@@ -1,0 +1,108 @@
+import tkinter as tk
+from tkinter import ttk
+
+class Calculator:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Python Calculator")
+        
+        # Create entry field
+        self.display = ttk.Entry(root, width=30, justify="right")
+        self.display.grid(row=0, column=0, columnspan=4, padx=5, pady=5)
+        
+        # Button layout
+        self.create_buttons()
+        
+        # Initialize variables
+        self.current_input = ""
+        self.current_operator = None
+        self.first_number = None
+        self.start_new_number = False
+    
+    def create_buttons(self):
+        # Button text for the calculator
+        button_list = [
+            '7', '8', '9', '/',
+            '4', '5', '6', '*',
+            '1', '2', '3', '-',
+            '0', '.', '=', '+'
+        ]
+        
+        # Create and place buttons
+        row = 1
+        col = 0
+        for button_text in button_list:
+            button = ttk.Button(
+                self.root,
+                text=button_text,
+                width=5,
+                command=lambda x=button_text: self.button_click(x)
+            )
+            button.grid(row=row, column=col, padx=2, pady=2)
+            col += 1
+            if col > 3:
+                col = 0
+                row += 1
+        
+        # Add Clear button
+        clear_button = ttk.Button(
+            self.root,
+            text='C',
+            width=5,
+            command=self.clear
+        )
+        clear_button.grid(row=row, column=col, padx=2, pady=2)
+    
+    def button_click(self, value):
+        if value.isdigit() or value == '.':
+            if self.start_new_number:
+                self.display.delete(0, tk.END)
+                self.start_new_number = False
+            self.display.insert(tk.END, value)
+            
+        elif value in ['+', '-', '*', '/']:
+            try:
+                self.first_number = float(self.display.get())
+                self.current_operator = value
+                self.start_new_number = True
+            except ValueError:
+                self.display.delete(0, tk.END)
+                self.display.insert(0, "Error")
+                
+        elif value == '=':
+            try:
+                second_number = float(self.display.get())
+                self.display.delete(0, tk.END)
+                
+                if self.current_operator == '+':
+                    result = self.first_number + second_number
+                elif self.current_operator == '-':
+                    result = self.first_number - second_number
+                elif self.current_operator == '*':
+                    result = self.first_number * second_number
+                elif self.current_operator == '/':
+                    if second_number == 0:
+                        result = "Error: Division by zero"
+                    else:
+                        result = self.first_number / second_number
+                
+                self.display.insert(0, str(result))
+                self.start_new_number = True
+                
+            except ValueError:
+                self.display.delete(0, tk.END)
+                self.display.insert(0, "Error")
+                
+    def clear(self):
+        self.display.delete(0, tk.END)
+        self.first_number = None
+        self.current_operator = None
+        self.start_new_number = False
+
+def main():
+    root = tk.Tk()
+    calculator = Calculator(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
